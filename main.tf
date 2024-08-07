@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_iam_role" "lambda_exec" {
-  name = "lambda_exec_role"
+  name = "LambdaParaReactividadDeEventos"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -25,8 +25,8 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 resource "aws_lambda_function" "ec2_state_change" {
   function_name = "EC2StateChangeHandler"
   role          = aws_iam_role.lambda_exec.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
+  handler       = "index.lambda_handler"
+  runtime       = "python3.9"
 
   source_code_hash = filebase64sha256("lambda_function_payload.zip")
   filename         = "lambda_function_payload.zip"
